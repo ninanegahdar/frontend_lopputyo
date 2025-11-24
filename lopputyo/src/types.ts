@@ -7,8 +7,14 @@ export type Customer = {
   email: string;
   phone: string;
   _links: {
-    self: { href: string };
-    customer: { href: string };
-    trainings: { href: string };
-  };
-};
+    self: {
+      href: string;
+    },
+    customer: {
+      href: string;
+    },
+    trainings: {
+      href: string;
+    }
+  }
+}
