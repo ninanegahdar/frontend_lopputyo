@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import TrainingList from "./components/TrainingList";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       </AppBar>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <CustomerList />
+        <TrainingList/>
       </Container>
     </>
   );
