@@ -12,6 +12,6 @@ export function getCustomers() {
     .then(response => {
     if (!response.ok)
         throw new Error("Error when deleting customers " + response.statusText)
-    return response.json();
+    return;
     })
     }

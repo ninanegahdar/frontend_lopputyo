@@ -27,7 +27,7 @@ export type Training = {
       self: {
         href: string;
       },
-      trainings: {
+      training: {
         href: string;
       },
       customer: {
