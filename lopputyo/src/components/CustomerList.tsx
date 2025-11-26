@@ -3,10 +3,12 @@ import { getCustomers, deleteCustomer } from '../api/customerApi';
 import { type GridColDef, type GridRenderCellParams, DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import type { Customer } from '../types';
+import { TextField } from '@mui/material';
 
 
 function CustomerList() {
     const [customers, setCustomers] = useState<Customer[]>([]);
+    const [searchText, setSearchText] = useState("");
 
     useEffect(() =>  {
     fetchCustomers();
@@ -45,18 +47,37 @@ const columns: GridColDef[] = [
     }
 ];
 
+    const filteredRows = customers.filter(customer =>
+        customer.firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+        customer.lastname.toLowerCase().includes(searchText.toLowerCase()) ||
+        customer.email.toLowerCase().includes(searchText.toLowerCase())
+    );
+
     return (
     <>
+    {/* Haku*/}
+        <div style={{ width: '90%', margin: 'auto', marginBottom: '1rem' }}>
+            <TextField
+                label="Search"
+                variant="outlined"
+                size="small"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                fullWidth
+            />
+        </div>
+
     <div style={{width: '90%', height: 500, margin: 'auto'}}>
-    <DataGrid
-    rows={customers}
-    columns={columns}
-    getRowId={row => row._links.self.href}
-    autoPageSize
-    rowSelection={false}
-    />
+        <DataGrid
+            rows={customers}
+            columns={columns}
+            getRowId={row => row._links.self.href}
+            autoPageSize
+            rowSelection={false}
+        />
     </div>
-    </>
-    )
+</>
+)
 }
-    export default CustomerList;
+
+export default CustomerList;

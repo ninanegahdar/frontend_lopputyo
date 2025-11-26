@@ -2,12 +2,14 @@ import { useState, useEffect} from 'react';
 import { getTrainings, deleteTraining } from '../api/trainingApi';
 import { type GridColDef, type GridRenderCellParams ,DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import type { Training } from '../types';
 import dayjs from "dayjs";
 
 
 function TrainingList() {
     const [trainings, setTrainings] = useState<Training[]>([]);
+    const [searchText, setSearchText] = useState("");
 
     useEffect(() =>  {
     fetchTrainings();
@@ -49,9 +51,25 @@ const columns: GridColDef<Training>[] = [
     }
 ];
 
+    const filteredRows = trainings.filter(training =>
+        training.activity.toLowerCase().includes(searchText.toLowerCase())
+    );
+
 
     return (
     <>
+    {/* Haku */}
+        <div style={{ width: '90%', margin: 'auto', marginBottom: '1rem' }}>
+            <TextField
+                label="Search Activity"
+                variant="outlined"
+                size="small"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                fullWidth
+            />
+        </div>
+
     <div style={{width: '90%', height: 500, margin: 'auto'}}>
     <DataGrid
     rows={trainings}
