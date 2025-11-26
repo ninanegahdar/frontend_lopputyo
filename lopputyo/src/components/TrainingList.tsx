@@ -1,8 +1,10 @@
 import { useState, useEffect} from 'react';
 import { getTrainings, deleteTraining } from '../api/trainingApi';
-import { type GridColDef, type GridRenderCellParams, DataGrid } from '@mui/x-data-grid';
+import { type GridColDef, type GridRenderCellParams ,DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import type { Training } from '../types';
+import dayjs from "dayjs";
+
 
 function TrainingList() {
     const [trainings, setTrainings] = useState<Training[]>([]);
@@ -26,8 +28,9 @@ function TrainingList() {
         }
 
 
-    const columns: GridColDef[] = [
-    { field: 'date', headerName: 'Date', width: 150 },
+    const columns: GridColDef<Training>[] = [
+    { field: 'date', headerName: 'Date', width: 150, valueFormatter: (params: { value: string }) =>
+    dayjs(params.value).format("DD.MM.YYYY HH:mm"),},
     { field: 'duration', headerName: 'Duration', width: 150 },
     { field: 'activity', headerName: 'Activity' },
     {
