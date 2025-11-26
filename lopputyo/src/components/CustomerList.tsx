@@ -69,7 +69,7 @@ const columns: GridColDef[] = [
 
     <div style={{width: '90%', height: 500, margin: 'auto'}}>
         <DataGrid
-            rows={customers}
+            rows={filteredRows}
             columns={columns}
             getRowId={row => row._links.self.href}
             autoPageSize
