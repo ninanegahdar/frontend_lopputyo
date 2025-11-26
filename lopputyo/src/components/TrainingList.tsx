@@ -27,21 +27,28 @@ function TrainingList() {
         }
         }
 
-
-    const columns: GridColDef<Training>[] = [
-    { field: 'date', headerName: 'Date', width: 150, valueFormatter: (params: { value: string }) =>
-    dayjs(params.value).format("DD.MM.YYYY HH:mm"),},
-    { field: 'duration', headerName: 'Duration', width: 150 },
-    { field: 'activity', headerName: 'Activity' },
+const columns: GridColDef<Training>[] = [
     {
-    field: '_links.self.href', headerName: '',
-    renderCell: (params: GridRenderCellParams) =>
-        <Button color= "error" size="small"
-        onClick={() => handleDelete(params.id as string)}>
-        Delete
-        </Button>
-        }
-    ]
+        field: 'date',
+        headerName: 'Date',
+        width: 150,
+        valueFormatter: (params: { value: string }) =>
+        dayjs(params.value).format("DD.MM.YYYY HH:mm"),
+        sortable: true
+    },
+    { field: 'duration', headerName: 'Duration', width: 150, sortable: true },
+    { field: 'activity', headerName: 'Activity', sortable: true },
+    {
+        field: '_links.self.href',
+        headerName: '',
+        renderCell: (params: GridRenderCellParams) =>
+            <Button color="error" size="small"
+            onClick={() => handleDelete(params.id as string)}>
+                Delete
+            </Button>
+    }
+];
+
 
     return (
     <>

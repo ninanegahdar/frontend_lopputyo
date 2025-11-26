@@ -26,23 +26,24 @@ function CustomerList() {
     }
     }
 
-    const columns: GridColDef[] = [
-    { field: 'firstname', headerName: 'First name', width: 150 },
-    { field: 'lastname', headerName: 'Last name', width: 150 },
-    { field: 'streetaddress', headerName: 'Address' },
-    { field: 'postcode', headerName: 'Postcode' },
-    { field: 'city', headerName: 'City' },
-    { field: 'email', headerName: 'Email' },
-    { field: 'phone', headerName: 'Phone' },
+const columns: GridColDef[] = [
+    { field: 'firstname', headerName: 'First name', width: 150, sortable: true },
+    { field: 'lastname', headerName: 'Last name', width: 150, sortable: true },
+    { field: 'streetaddress', headerName: 'Address', sortable: true },
+    { field: 'postcode', headerName: 'Postcode', sortable: true },
+    { field: 'city', headerName: 'City', sortable: true },
+    { field: 'email', headerName: 'Email', sortable: true },
+    { field: 'phone', headerName: 'Phone', sortable: true },
     {
-    field: '_links.self.href', headerName: '',
-    renderCell: (params: GridRenderCellParams) =>
-        <Button color= "error" size="small"
-        onClick={() => handleDelete(params.id as string)}>
-        Delete
-        </Button>
-        }
-    ]
+        field: '_links.self.href',
+        headerName: '',
+        renderCell: (params: GridRenderCellParams) =>
+            <Button color="error" size="small"
+            onClick={() => handleDelete(params.id as string)}>
+                Delete
+            </Button>
+    }
+];
 
     return (
     <>
