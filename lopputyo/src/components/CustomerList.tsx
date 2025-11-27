@@ -69,9 +69,8 @@ const columns: GridColDef[] = [
             />
         </div>
 
-    <AddCustomer/>
-
     <div style={{width: '90%', height: 500, margin: 'auto'}}>
+        <AddCustomer/>
         <DataGrid
             rows={filteredRows}
             columns={columns}

@@ -9,6 +9,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function AddCustomer () {
     const [open, setOpen] = React.useState(false);
+    const [customer, setCustomer] = React.useState({
+    firstname:'',
+    lastname:'',
+    streetaddress:'',
+    postcode:'',
+    city:'',
+    email: '',
+    phone: '',
+    })
 
     const handleClickOpen = () => {
     setOpen(true);
@@ -27,6 +36,11 @@ export default function AddCustomer () {
     handleClose();
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomer({ ...customer, [e.target.name]: e.target.value });
+};
+
+
 return (
     <React.Fragment>
     <Button variant="outlined" onClick={handleClickOpen}>
@@ -40,14 +54,63 @@ return (
         <form onSubmit={handleSubmit} id="subscription-form">
             <TextField
                 autoFocus
-                required
                 margin="dense"
-                id="name"
+                name="firstname"
+                value={customer.firstname}
+                onChange={handleInputChange}
+                label="First name"
+                fullWidth
+            />
+            <TextField
+                margin="dense"
+                name="lastname"
+                value={customer.lastname}
+                onChange={handleInputChange}
+                label="Last name"
+                fullWidth
+            />
+            <TextField
+                margin="dense"
+                name="streetaddress"
+                value={customer.streetaddress}
+                onChange={handleInputChange}
+                label="Address"
+                fullWidth
+            />
+            <TextField
+                margin="dense"
+                name="postcode"
+                value={customer.postcode}
+                onChange={handleInputChange}
+                label="Postcode"
+                fullWidth
+            />
+            <TextField
+                margin="dense"
+                name="city"
+                value={customer.city}
+                onChange={handleInputChange}
+                label="City"
+                fullWidth
+            />
+            <TextField
+                margin="dense"
                 name="email"
-                label="Email Address"
+                value={customer.email}
+                onChange={handleInputChange}
+                label="Email"
                 type="email"
                 fullWidth
-                variant="standard"/>
+            />
+            <TextField
+                margin="dense"
+                name="phone"
+                value={customer.phone}
+                onChange={handleInputChange}
+                label="Phone"
+                fullWidth
+            />
+
         </form>
         </DialogContent>
             <DialogActions>
