@@ -1,5 +1,5 @@
 import AddCustomer from './AddCustomer';
-import { getCustomers, deleteCustomer } from '../api/customerApi';
+import { getCustomers, deleteCustomer, saveCustomer } from '../api/customerApi';
 import type { Customer } from '../types';
 
 import { useState, useEffect} from 'react';
@@ -70,7 +70,10 @@ const columns: GridColDef[] = [
         </div>
 
     <div style={{width: '90%', height: 500, margin: 'auto'}}>
-        <AddCustomer/>
+        <AddCustomer
+            saveCustomer={saveCustomer}
+            onCustomerAdded={fetchCustomers}
+            />
         <DataGrid
             rows={filteredRows}
             columns={columns}

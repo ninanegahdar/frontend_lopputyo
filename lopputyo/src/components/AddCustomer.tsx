@@ -5,9 +5,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import type { Customer } from '../types';
 
+type AddCustomerProps = {
+    saveCustomer: (customer: Customer) => Promise<any>;
+    onCustomerAdded?: () => void;
+};
 
-export default function AddCustomer () {
+export default function AddCustomer({ saveCustomer }: AddCustomerProps) {
     const [open, setOpen] = React.useState(false);
     const [customer, setCustomer] = React.useState({
     firstname:'',
@@ -29,16 +34,18 @@ export default function AddCustomer () {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const formJson = Object.fromEntries((formData as any).entries());
-    const email = formJson.email;
-    console.log(email);
-    handleClose();
+    saveCustomer(customer as Customer)
+    .then(() => {
+        console.log("Customer saved");
+        handleClose();
+        if (onCustomerAdded) onCustomerAdded();
+    })
+        .catch(err => console.error(err));
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
-};
+    };
 
 
 return (
@@ -124,4 +131,8 @@ return (
         </Dialog>
     </React.Fragment>
     );
+}
+
+function onCustomerAdded() {
+    throw new Error('Function not implemented.');
 }

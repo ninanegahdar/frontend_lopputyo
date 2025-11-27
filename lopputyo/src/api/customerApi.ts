@@ -1,3 +1,5 @@
+import type { Customer } from "../types";
+
 export function getCustomers() {
     return fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers')
     .then(response => {
@@ -15,3 +17,20 @@ export function getCustomers() {
     return;
     })
     }
+
+    export function saveCustomer(customer: Customer) {
+        return fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers',
+        {
+            method: 'POST',
+            headers: {
+            'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(customer)
+            }
+        )
+        .then(response => {
+        if (!response.ok)
+            throw new Error("Error when saving customer: " + response.statusText);
+        return response.json();
+    });
+}
