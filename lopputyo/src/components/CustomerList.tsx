@@ -1,8 +1,10 @@
-import { useState, useEffect} from 'react';
+import AddCustomer from './AddCustomer';
 import { getCustomers, deleteCustomer } from '../api/customerApi';
+import type { Customer } from '../types';
+
+import { useState, useEffect} from 'react';
 import { type GridColDef, type GridRenderCellParams, DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-import type { Customer } from '../types';
 import { TextField } from '@mui/material';
 
 
@@ -66,6 +68,8 @@ const columns: GridColDef[] = [
                 fullWidth
             />
         </div>
+
+    <AddCustomer/>
 
     <div style={{width: '90%', height: 500, margin: 'auto'}}>
         <DataGrid
