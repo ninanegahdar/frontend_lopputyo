@@ -32,5 +32,18 @@ export function getCustomers() {
         if (!response.ok)
             throw new Error("Error when saving customer: " + response.statusText);
         return response.json();
+    })
+    }
+
+    export function updateCustomer(customer: Customer, url: string) {
+    return fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(customer)
+    }).then(response => {
+        if (!response.ok)
+            throw new Error("Updating failed" + response.statusText);
+        return response.json();
     });
-}
+    }
+

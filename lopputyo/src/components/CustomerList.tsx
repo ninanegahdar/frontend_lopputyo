@@ -1,4 +1,5 @@
 import AddCustomer from './AddCustomer';
+import EditCustomer from './EditCustomer';
 import { getCustomers, deleteCustomer, saveCustomer } from '../api/customerApi';
 import type { Customer } from '../types';
 
@@ -6,11 +7,14 @@ import { useState, useEffect} from 'react';
 import { type GridColDef, GridActionsCellItem, type GridRowParams, DataGrid } from '@mui/x-data-grid';
 import { TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 
 function CustomerList() {
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [searchText, setSearchText] = useState("");
+    const [editCustomerParams, setEditCustomerParams] = useState<Customer | null>(null);
 
     useEffect(() =>  {
     fetchCustomers();
@@ -30,6 +34,11 @@ function CustomerList() {
     }
     }
 
+    const handleCustomerUpdated = () => {
+    fetchCustomers();
+    setEditCustomerParams(null);
+    };
+
 const columns: GridColDef[] = [
     { field: 'firstname', headerName: 'First name', width: 150, sortable: true },
     { field: 'lastname', headerName: 'Last name', width: 150, sortable: true },
@@ -38,8 +47,20 @@ const columns: GridColDef[] = [
     { field: 'city', headerName: 'City', sortable: true },
     { field: 'email', headerName: 'Email', sortable: true },
     { field: 'phone', headerName: 'Phone', sortable: true },
-    {
-        field: 'actions',
+
+    { field: 'edit',
+        type: 'actions',
+        headerName: '',
+        getActions: (params: GridRowParams) => [
+            <GridActionsCellItem
+                icon={<EditIcon />}
+                label="Edit"
+                onClick={() =>
+                    setEditCustomerParams(params.row)}/>
+        ]
+    },
+
+    { field: 'actions',
         type: 'actions',
         headerName: '',
         getActions: (params: GridRowParams) => [
@@ -85,8 +106,15 @@ const columns: GridColDef[] = [
             rowSelection={false}
         />
     </div>
-</>
-)
+        {editCustomerParams && (
+        <EditCustomer
+            customer={editCustomerParams}
+            updateCustomer={saveCustomer}
+            onCustomerUpdated={handleCustomerUpdated}
+            />
+        )}
+    </>
+    );
 }
 
 export default CustomerList;
