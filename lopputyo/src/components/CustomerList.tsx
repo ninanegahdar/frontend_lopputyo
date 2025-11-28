@@ -3,9 +3,9 @@ import { getCustomers, deleteCustomer, saveCustomer } from '../api/customerApi';
 import type { Customer } from '../types';
 
 import { useState, useEffect} from 'react';
-import { type GridColDef, type GridRenderCellParams, DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
+import { type GridColDef, GridActionsCellItem, type GridRowParams, DataGrid } from '@mui/x-data-grid';
 import { TextField } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 function CustomerList() {
@@ -39,13 +39,16 @@ const columns: GridColDef[] = [
     { field: 'email', headerName: 'Email', sortable: true },
     { field: 'phone', headerName: 'Phone', sortable: true },
     {
-        field: '_links.self.href',
+        field: 'actions',
+        type: 'actions',
         headerName: '',
-        renderCell: (params: GridRenderCellParams) =>
-            <Button color="error" size="small"
-            onClick={() => handleDelete(params.id as string)}>
-                Delete
-            </Button>
+        getActions: (params: GridRowParams) => [
+            <GridActionsCellItem
+                icon={<DeleteIcon color="error" />}
+                onClick={() => handleDelete(params.id as string)}
+                label="Delete"
+            />
+        ]
     }
 ];
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { deleteTraining, getTrainingsWithCustomer } from '../api/trainingApi';
-import { DataGrid, type GridColDef, type GridRenderCellParams} from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
+import { DataGrid, GridActionsCellItem, type GridRowParams, type GridColDef,} from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
 import type { Training } from '../types';
 import dayjs from "dayjs";
@@ -53,13 +53,16 @@ function TrainingList() {
             sortable: true
         },
         {
-            field: '_links.self.href',
-            headerName: '',
-            renderCell: (params: GridRenderCellParams) =>
-                <Button color="error" size="small"
-                    onClick={() => handleDelete(params.id as string)}>
-                    Delete
-                </Button>
+            field: 'actions',
+                    type: 'actions',
+                    headerName: '',
+                    getActions: (params: GridRowParams) => [
+                        <GridActionsCellItem
+                            icon={<DeleteIcon color="error" />}
+                            onClick={() => handleDelete(params.id as string)}
+                            label="Delete"
+                        />
+                    ]
         }
     ];
 
