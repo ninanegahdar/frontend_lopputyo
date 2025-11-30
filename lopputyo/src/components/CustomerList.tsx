@@ -1,6 +1,6 @@
 import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
-import { getCustomers, deleteCustomer, saveCustomer } from '../api/customerApi';
+import { getCustomers, deleteCustomer, saveCustomer, updateCustomer } from '../api/customerApi';
 import type { Customer } from '../types';
 
 import { useState, useEffect} from 'react';
@@ -109,7 +109,7 @@ const columns: GridColDef[] = [
         {editCustomerParams && (
         <EditCustomer
             customer={editCustomerParams}
-            updateCustomer={saveCustomer}
+            updateCustomer={updateCustomer}
             onCustomerUpdated={handleCustomerUpdated}
             />
         )}

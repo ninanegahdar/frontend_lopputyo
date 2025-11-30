@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -15,7 +15,7 @@ type EditCustomerProps = {
 
 export default function EditCustomer({ customer, updateCustomer, onCustomerUpdated }: EditCustomerProps) {
     const [open, setOpen] = React.useState(false);
-    const [editedCustomer, setEditedCustomer] = React.useState({
+    const [editedCustomer, setEditedCustomer] = React.useState<Customer>(customer); ({
     firstname:'',
     lastname:'',
     streetaddress:'',
@@ -25,10 +25,13 @@ export default function EditCustomer({ customer, updateCustomer, onCustomerUpdat
     phone: '',
     })
 
-    const handleClickOpen = () => {
-    setEditedCustomer(customer);
-    setOpen(true);
-    };
+    useEffect(() => {
+        if (customer) {
+            setEditedCustomer(customer);
+            setOpen(true);
+        }
+    }, [customer]);
+
 
     const handleClose = () => {
     setOpen(false);
@@ -36,7 +39,7 @@ export default function EditCustomer({ customer, updateCustomer, onCustomerUpdat
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    updateCustomer(customer, customer._links.self.href)
+    updateCustomer(editedCustomer, customer._links.self.href)
     .then(() => {
         console.log("Customer saved");
         handleClose();
@@ -46,15 +49,12 @@ export default function EditCustomer({ customer, updateCustomer, onCustomerUpdat
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedCustomer({ ...customer, [e.target.name]: e.target.value });
+    setEditedCustomer({ ...editedCustomer, [e.target.name]: e.target.value });
     };
 
 
 return (
     <React.Fragment>
-    <Button variant="outlined" color="primary" size= "small" onClick={handleClickOpen}>
-        Edit Customer
-    </Button>
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
             Edit
@@ -65,7 +65,7 @@ return (
                 autoFocus
                 margin="dense"
                 name="firstname"
-                value={customer.firstname}
+                value={editedCustomer.firstname}
                 onChange={handleInputChange}
                 label="First name"
                 fullWidth
@@ -73,7 +73,7 @@ return (
             <TextField
                 margin="dense"
                 name="lastname"
-                value={customer.lastname}
+                value={editedCustomer.lastname}
                 onChange={handleInputChange}
                 label="Last name"
                 fullWidth
@@ -81,7 +81,7 @@ return (
             <TextField
                 margin="dense"
                 name="streetaddress"
-                value={customer.streetaddress}
+                value={editedCustomer.streetaddress}
                 onChange={handleInputChange}
                 label="Address"
                 fullWidth
@@ -89,7 +89,7 @@ return (
             <TextField
                 margin="dense"
                 name="postcode"
-                value={customer.postcode}
+                value={editedCustomer.postcode}
                 onChange={handleInputChange}
                 label="Postcode"
                 fullWidth
@@ -97,7 +97,7 @@ return (
             <TextField
                 margin="dense"
                 name="city"
-                value={customer.city}
+                value={editedCustomer.city}
                 onChange={handleInputChange}
                 label="City"
                 fullWidth
@@ -105,7 +105,7 @@ return (
             <TextField
                 margin="dense"
                 name="email"
-                value={customer.email}
+                value={editedCustomer.email}
                 onChange={handleInputChange}
                 label="Email"
                 type="email"
@@ -114,7 +114,7 @@ return (
             <TextField
                 margin="dense"
                 name="phone"
-                value={customer.phone}
+                value={editedCustomer.phone}
                 onChange={handleInputChange}
                 label="Phone"
                 fullWidth
