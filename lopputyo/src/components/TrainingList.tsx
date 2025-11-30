@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { deleteTraining, getTrainingsWithCustomer } from '../api/trainingApi';
+import { deleteTraining, getTrainingsWithCustomer, saveTraining } from '../api/trainingApi';
 import { DataGrid, GridActionsCellItem, type GridRowParams, type GridColDef,} from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
 import type { Training } from '../types';
 import dayjs from "dayjs";
+import AddTraining from './AddTraining';
 
 function TrainingList() {
     const [trainings, setTrainings] = useState<Training[]>([]);
@@ -14,18 +15,20 @@ function TrainingList() {
         fetchTrainings();
     }, []);
 
-    const fetchTrainings = () => {
-        getTrainingsWithCustomer()
-            .then(data => {
-                // Lisää customerName jokaiselle harjoitukselle
-                const trainingsWithCustomer = data.map((t: any) => ({
-                    ...t,
-                    customerName: t.customer.firstname + " " + t.customer.lastname
-                }));
-                setTrainings(trainingsWithCustomer);
-            })
-            .catch(err => console.error(err));
-    };
+const fetchTrainings = () => {
+    getTrainingsWithCustomer()
+        .then(data => {
+            const trainingsData = data._embedded?.trainings || data;
+            const trainingsWithCustomer = trainingsData.map((t: any) => ({
+        ...t,
+    customerName: t.customer.firstname + " " + t.customer.lastname
+}));
+setTrainings(trainingsWithCustomer);
+
+        })
+        .catch(err => console.error(err));
+};
+
 
     const handleDelete = (url: string) => {
         if (window.confirm("Are you sure?")) {
@@ -78,29 +81,34 @@ function TrainingList() {
 );
 
     return (
-        <>
-            {/* Haku */}
-            <div style={{ width: '90%', margin: 'auto', marginBottom: '1rem' }}>
-                <TextField
-                    label="Search"
-                    variant="outlined"
-                    size="small"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    fullWidth
-                />
+    <>
+    {/* Haku */}
+        <div style={{ width: '90%', margin: 'auto', marginBottom: '1rem' }}>
+            <TextField
+                label="Search"
+                variant="outlined"
+                size="small"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                fullWidth
+            />
             </div>
+        <div style={{ width: '90%', height: 500, margin: 'auto' }}>
+            <AddTraining
+                    saveTraining={saveTraining}
+                    onTrainingAdded={fetchTrainings}
+                    customerUrl={''}
+                />
 
-            <div style={{ width: '90%', height: 500, margin: 'auto' }}>
-                <DataGrid
-                    rows={filteredRows}
-                    columns={columns}
-                    getRowId={row => row.id}
-                    autoPageSize
-                    rowSelection={false}
-                />
-            </div>
-        </>
+            <DataGrid
+                rows={filteredRows}
+                columns={columns}
+                getRowId={row => row.id}
+                autoPageSize
+                rowSelection={false}
+            />
+        </div>
+    </>
     );
 }
 

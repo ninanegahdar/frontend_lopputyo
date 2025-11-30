@@ -1,3 +1,5 @@
+import type { Training } from "../types";
+
 export function getTrainings() {
         return fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings')
     .then(response => {
@@ -24,3 +26,14 @@ export function getTrainingsWithCustomer() {
     return;
     })
     }
+
+export function saveTraining(training: Omit<Training, "_links" | "id">) {
+    return fetch('https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(training)
+    }).then(response => {
+        if (!response.ok) throw new Error('Error saving training');
+    return response.json();
+    });
+}
