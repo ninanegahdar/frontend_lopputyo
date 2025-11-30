@@ -30,8 +30,9 @@ setTrainings(trainingsWithCustomer);
 };
 
 
-    const handleDelete = (url: string) => {
+    const handleDelete = (id: number) => {
         if (window.confirm("Are you sure?")) {
+            const url = `https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings/${id}`;
             deleteTraining(url)
                 .then(() => fetchTrainings())
                 .catch(err => console.error(err));
@@ -62,7 +63,7 @@ setTrainings(trainingsWithCustomer);
                     getActions: (params: GridRowParams) => [
                         <GridActionsCellItem
                             icon={<DeleteIcon color="error" />}
-                            onClick={() => handleDelete(params.id as string)}
+                            onClick={() => handleDelete(params.row.id)}
                             label="Delete"
                         />
                     ]
