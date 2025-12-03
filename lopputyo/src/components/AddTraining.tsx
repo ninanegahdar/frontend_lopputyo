@@ -105,7 +105,7 @@ export default function AddTraining({ saveTraining, onTrainingAdded }: AddTraini
                         <Autocomplete
                             options={customers}
                             getOptionLabel={(option) => option.firstname + " " + option.lastname}
-                            onChange={(event, newValue) => {
+                            onChange={(_event, newValue) => {
                                 if (newValue) setTraining(prev => ({
                                     ...prev,
                                     customer: newValue._links.self.href
