@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
     <CssBaseline />
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: "#f73378" }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Personal Training
