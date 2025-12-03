@@ -5,7 +5,7 @@ import type { Customer } from '../types';
 
 import { useState, useEffect} from 'react';
 import { type GridColDef, GridActionsCellItem, type GridRowParams, DataGrid } from '@mui/x-data-grid';
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -38,6 +38,36 @@ function CustomerList() {
     fetchCustomers();
     setEditCustomerParams(null);
     };
+
+    const exportCustomersToCSV = (customers: Customer[]) => {
+        if (!customers || customers.length === 0) return;
+
+        const headers = ['First name', 'Last name', 'Address', 'Postcode', 'City', 'Email', 'Phone'];
+        const rows = customers.map(c => [
+            c.firstname,
+            c.lastname,
+            c.streetaddress,
+            c.postcode,
+            c.city,
+            c.email,
+            c.phone
+        ]);
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map(r => r.map(v => `"${v}"`).join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute('download', 'customers.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
 
 const columns: GridColDef[] = [
     { field: 'firstname', headerName: 'First name', width: 150, sortable: true },
@@ -98,6 +128,13 @@ const columns: GridColDef[] = [
             saveCustomer={saveCustomer}
             onCustomerAdded={fetchCustomers}
             />
+        
+        <Button
+            variant="outlined"
+            onClick={() => exportCustomersToCSV(customers)}
+            >
+            Export CSV
+        </Button>
         <DataGrid
             rows={filteredRows}
             columns={columns}
