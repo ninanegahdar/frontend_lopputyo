@@ -28,7 +28,7 @@ export default function CalendarPage() {
         }));
 
         setEvents(mappedEvents);
-        console.log('Kalenterin eventit:', mappedEvents); // debug
+        console.log('Kalenterin eventit:', mappedEvents);
     })
         .catch(err => console.error(err));
     }, []);

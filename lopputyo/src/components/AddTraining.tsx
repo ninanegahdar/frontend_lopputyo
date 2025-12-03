@@ -15,7 +15,7 @@ type AddTrainingProps = {
     onTrainingAdded?: () => void;
 };
 
-export default function AddTraining({ saveTraining, customerUrl, onTrainingAdded }: AddTrainingProps) {
+export default function AddTraining({ saveTraining, onTrainingAdded }: AddTrainingProps) {
     const [open, setOpen] = React.useState(false);
     const [training, setTraining] = React.useState({
         date: '',
