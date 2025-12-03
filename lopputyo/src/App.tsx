@@ -1,6 +1,8 @@
 import CustomerList from "./components/CustomerList";
 import TrainingList from "./components/TrainingList";
+import CalendarPage from "./components/CalendarPage";
 import Home from "./Home";
+
 
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -23,6 +25,7 @@ function App() {
             <Button color="inherit" component={Link} to="/">Home</Button>
             <Button color="inherit" component={Link} to="/customers">Customers</Button>
             <Button color="inherit" component={Link} to="/trainings">Trainings</Button>
+            <Button color="inherit" component={Link} to="/calendar">Calendar</Button>
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
@@ -30,6 +33,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
+          <Route path="/calendar" element={<CalendarPage />} />
         </Routes>
       </Container>
     </Router>

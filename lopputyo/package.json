@@ -12,11 +12,16 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@internationalized/date": "^3.10.0",
     "@mui/icons-material": "^7.3.5",
     "@mui/material": "^7.3.5",
     "@mui/x-data-grid": "^8.19.0",
+    "@react-aria/i18n": "^3.12.13",
+    "@types/react-big-calendar": "^1.16.3",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.19",
     "react": "^19.1.1",
+    "react-big-calendar": "^1.19.4",
     "react-dom": "^19.1.1",
     "react-router": "^7.9.6",
     "react-router-dom": "^7.9.6"
