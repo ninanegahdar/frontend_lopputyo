@@ -134,7 +134,3 @@ return (
     </React.Fragment>
     );
 }
-
-function onCustomerAdded() {
-    throw new Error('Function not implemented.');
-}
